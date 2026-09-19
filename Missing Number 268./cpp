@@ -1,3 +1,8 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
@@ -12,3 +17,12 @@ public:
     }
 
 };
+
+int main() {
+    Solution solver;
+
+    vector<int> test = {3, 0, 1};
+    int result = solver.missingNumber(test);
+    cout << result << endl;
+
+}
