@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+
+        vector<vector<int>> result;
+        int n = intervals.size();
+        int i = 0;
+
+        while (i < n && intervals[i][1] < newInterval[0]) {
+            result.push_back(intervals[i]);
+            i++;
+        }
+
+        while (i < n && intervals[i][0] <= newInterval[1]) {
+            newInterval[0] = min(newInterval[0], intervals[i][0]);
+            newInterval[1] = max(newInterval[1], intervals[i][1]);
+            i++;
+        }
+        result.push_back(newInterval);
+
+        while (i < n) {
+            result.push_back(intervals[i]);
+            i++;
+        }
+
+        return result;
+    }
+};
+
+void printIntervals(const vector<vector<int>>& intervals) {
+    cout << "[";
+    for (size_t i = 0; i < intervals.size(); ++i) {
+        cout << "[" << intervals[i][0] << "," << intervals[i][1] << "]";
+        if (i + 1 < intervals.size()) {
+            cout << ",";
+        }
+    }
+    cout << "]" << endl;
+}
+
+int main() {
+    Solution solver;
+
+    vector<vector<int>> intervals = {{1, 3}, {6, 9}};
+    vector<int> newInterval = {2, 5};
+    vector<vector<int>> res = solver.insert(intervals, newInterval);
+
+    printIntervals(res);
+}
